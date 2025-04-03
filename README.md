@@ -1,2 +1,2 @@
 # deltalake
-deltalake, pandas, poalrs, fsspec
+deltalake, pandas, polars, fsspec
