@@ -80,7 +80,7 @@ print(f"Overall throughput: {records_per_second:,} records/second")
 print("==================================\n")
 
 print("{",
-f'"method": "polars-lazy",'
+f'"method": "pandas",'
 f'"records": "{record_count:,}",'
 f'"readtime": "{read_duration/1000:.2f}",'
 f'"readput": "{read_throughput:,}",'
