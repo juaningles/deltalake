@@ -79,7 +79,9 @@ f'"readtime": "{read_duration/1000:.2f}",'
 f'"readput": "{read_throughput:,}",'
 f'"writetime": "{write_duration/1000:.2f}",'
 f'"writeput": "{write_throughput:,}",'
-f'"totaltime": "{total_duration/1000:.2f}"',"}"
+f'"totaltime": "{total_duration/1000:.2f}",'
+f'"totalput": "{records_per_second:,}'
+,"}"
 )
 
 if entity_name:
