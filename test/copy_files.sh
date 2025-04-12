@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Default values
-OUTPUT_DIR="/tmp/input"
+OUTPUT_DIR="/tmp/testing/input"
 SOURCE_FILE=""
 COUNT_FILE=""
 COUNT_NUM=0
