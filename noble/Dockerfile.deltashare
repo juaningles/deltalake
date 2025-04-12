@@ -1,0 +1,17 @@
+FROM ubuntu:noble
+
+# Use /bin/bash as the shell
+SHELL ["/bin/bash", "-c"]
+
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata \
+	&& apt-get install -y python3 \
+	&& apt-get install -y python3-pip \
+    && apt-get install -y python3-venv \
+    && rm -rf $(pip cache dir) \
+    && pip3 install --break-system-packages pandas fsspec pyarrow \
+    && pip3 install --break-system-packages polars[deltalake] \
+	&& apt-get clean \
+    && rm -rf $(pip cache dir) \
+    &&	rm -rf /var/lib/apt/lists/* \
+    &&	rm -f /etc/ssh/ssh_host_*

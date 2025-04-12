@@ -1,0 +1,49 @@
+FROM alpine:3
+
+# # Use /bin/bash as the shell
+# SHELL ["/bin/bash", "-c"]
+
+RUN apk add bash python3 curl py3-tzdata
+RUN apk add py3-pandas py3-fsspec py3-pyarrow
+RUN apk add py3-requests
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+RUN /root/.local/bin/uv init venv
+RUN cd venv \
+    && /root/.local/bin/uv add polars[deltalake] \
+    && /root/.local/bin/uv add python-dotenv pysftp
+
+
+# RUN apt-get update \
+#     && DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata curl \
+# 	&& apt-get install -y python3 \
+#     && apt-get clean \
+#     && rm -rf $(pip cache dir) \
+#     &&	rm -rf /var/lib/apt/lists/* \
+#     &&	rm -f /etc/ssh/ssh_host_*
+# RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+# RUN /root/.local/bin/uv init venv
+# RUN cd venv \
+#     && /root/.local/bin/uv add pandas fsspec pyarrow \
+#     && /root/.local/bin/uv add polars[deltalake] \
+#     && /root/.local/bin/uv add python-dotenv pysftp requests
+
+# RUN apt-get update \
+#     && apt-get install -y wget \
+#     && wget https://packages.microsoft.com/config/ubuntu/24.04/packages-microsoft-prod.deb \
+#     && dpkg -i packages-microsoft-prod.deb \
+#     && apt-get update \
+#     && apt-get install -y libfuse3-dev fuse3 \
+#     && apt-get install -y blobfuse2 \
+# 	&& apt-get clean \
+#     && rm -rf $(pip cache dir) \
+#     &&	rm -rf /var/lib/apt/lists/* \
+#     &&	rm -f /etc/ssh/ssh_host_*
+
+
+
+
+# # Copy the code and environ file from the host to the container
+# COPY code /code
+COPY ../test /test
+# RUN mkdir -p /data
+

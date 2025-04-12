@@ -1,0 +1,54 @@
+FROM ubuntu:noble
+
+# Use /bin/bash as the shell
+SHELL ["/bin/bash", "-c"]
+
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata curl \
+	&& apt-get install -y python3 \
+    && curl -LsSf https://astral.sh/uv/install.sh | sh \
+    && /root/.local/bin/uv init venv \
+    && cd venv \
+    && /root/.local/bin/uv add pandas fsspec pyarrow \
+    && /root/.local/bin/uv add polars[deltalake] \
+    && /root/.local/bin/uv add python-dotenv pysftp requests \
+    && /root/.local/bin/uv add parquet-tools \
+    && apt-get clean \
+    &&	rm -rf /var/lib/apt/lists/* \
+    &&	rm -f /etc/ssh/ssh_host_* \
+    &&	rm -rf ~/.cache
+
+
+#     && rm -rf $(pip cache dir) \
+#     && pip3 install --break-system-packages pandas fsspec pyarrow \
+#     && pip3 install --break-system-packages polars[deltalake] \
+# 	&& apt-get clean \
+#     && rm -rf $(pip cache dir) \
+#     &&	rm -rf /var/lib/apt/lists/* \
+#     &&	rm -f /etc/ssh/ssh_host_*
+# RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+# RUN pip3 install --break-system-packages python-dotenv pysftp requests \
+#     && apt-get clean \
+#     && rm -rf $(pip cache dir) \
+#     &&	rm -rf /var/lib/apt/lists/* \
+#     &&	rm -f /etc/ssh/ssh_host_*
+
+# RUN apt-get update \
+#     && apt-get install -y wget \
+#     && wget https://packages.microsoft.com/config/ubuntu/24.04/packages-microsoft-prod.deb \
+#     && dpkg -i packages-microsoft-prod.deb \
+#     && apt-get update \
+#     && apt-get install -y libfuse3-dev fuse3 \
+#     && apt-get install -y blobfuse2 \
+# 	&& apt-get clean \
+#     && rm -rf $(pip cache dir) \
+#     &&	rm -rf /var/lib/apt/lists/* \
+#     &&	rm -f /etc/ssh/ssh_host_*
+
+# # Copy the code and environ file from the host to the container
+# COPY code /code
+COPY ../test /test
+# RUN mkdir -p /data
+
+ENV PATH="/venv/.venv/bin/:${PATH}"
+
